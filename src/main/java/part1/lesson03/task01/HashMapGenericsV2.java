@@ -23,9 +23,7 @@ public class HashMapGenericsV2<K, V> implements Map<K, V> {
 
     /**
      * Метод добавления пары ключ-значение
-     * @return
      */
-
     @Override
     public V put(K key, V value) {
         if (key == null) throw new NullPointerException("Нельзя положить элемент по ключу null");
@@ -55,6 +53,9 @@ public class HashMapGenericsV2<K, V> implements Map<K, V> {
         }
     }
 
+    /**
+     * Метод удаления элемента по ключу
+     */
     @Override
     public V remove(Object key) {
         int index = hash((K) key);
@@ -70,6 +71,9 @@ public class HashMapGenericsV2<K, V> implements Map<K, V> {
         return node.getValue();
     }
 
+    /**
+     * Метод получения элемента по ключу
+     */
     @Override
     public V get(Object key) {
         int index = hash((K) key);
@@ -81,6 +85,9 @@ public class HashMapGenericsV2<K, V> implements Map<K, V> {
         return null;
     }
 
+    /**
+     * Метод добавления всех элементов одной мапы в текущую
+     */
     @Override
     public void putAll(Map<? extends K, ? extends V> m) {
         for (Map.Entry<? extends K, ? extends V> entry : m.entrySet()) {
@@ -90,6 +97,9 @@ public class HashMapGenericsV2<K, V> implements Map<K, V> {
         }
     }
 
+    /**
+     * Метод очистки всех элементов в мапе
+     */
     @Override
     public void clear() {
         for (int i = 0; i < hashTable.length; i++) {
@@ -98,6 +108,9 @@ public class HashMapGenericsV2<K, V> implements Map<K, V> {
         size=0;
     }
 
+    /**
+     * Метод получения множества ключей
+     */
     @Override
     public Set<K> keySet() {
         Set<K> set = new HashSet<>();
@@ -108,6 +121,9 @@ public class HashMapGenericsV2<K, V> implements Map<K, V> {
         return set;
     }
 
+    /**
+     * Метод получения списка значений
+     */
     @Override
     public Collection<V> values() {
         List<V> list = new ArrayList<>();
@@ -118,6 +134,9 @@ public class HashMapGenericsV2<K, V> implements Map<K, V> {
         return list;
     }
 
+    /**
+     * Метод получения множества пар ключ-значение
+     */
     public Set<Map.Entry<K, V>> entrySet() {
         Set<Map.Entry<K, V>> set = new HashSet<>();
         for (int i = 0; i < hashTable.length; i++) {
@@ -128,25 +147,40 @@ public class HashMapGenericsV2<K, V> implements Map<K, V> {
         return set;
     }
 
+    /**
+     * Метод получения размера мапы
+     */
     public int size() {
         return size;
     }
 
+    /**
+     * Метод проверки, что мапа является пустой
+     */
     @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
+    /**
+     * Метод проверки содержания данного ключа в мапе
+     */
     @Override
     public boolean containsKey(Object key) {
         return keySet().contains(key);
     }
 
+    /**
+     * Метод проверки содержания данного значения в мапе
+     */
     @Override
     public boolean containsValue(Object value) {
         return values().contains(value);
     }
 
+    /**
+     * Метод увеличения мапы при заполнении на 3/4
+     */
     private void resize() {
         Node<K,V>[] oldHashTable = hashTable;
         hashTable = new Node[oldHashTable.length * 2];
@@ -216,7 +250,6 @@ public class HashMapGenericsV2<K, V> implements Map<K, V> {
 
             Node<?, ?> node = (Node<?, ?>) o;
 
-            //if (hash != node.hash) return false;
             if (key != null ? !key.equals(node.key) : node.key != null) return false;
             return value != null ? value.equals(node.value) : node.value == null;
         }
