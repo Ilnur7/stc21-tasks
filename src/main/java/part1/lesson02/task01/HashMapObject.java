@@ -42,7 +42,7 @@ public class HashMapObject {
 
         List<Node> nodeList = hashTable[index].getNodes();
 
-        //TODO разделить в другие методы
+        
         for (Node node: nodeList) {
             if (newNode.getKey().equals(node.getKey()) && !newNode.getValue().equals(node.getValue())){
                 node.setValue(value);
