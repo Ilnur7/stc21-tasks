@@ -48,7 +48,7 @@ public class HashMapObject {
                 node.setValue(value);
                 return true;
             }
-            if (node.hashCode() == newNode.hashCode() && !newNode.key.equals(node.key) && !newNode.value.equals(node.key)){
+            if (node.hashCode() == newNode.hashCode() && !newNode.key.equals(node.key) && !newNode.value.equals(node.value)){
                 nodeList.add(newNode);
                 size++;
                 return true;

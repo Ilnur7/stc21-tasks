@@ -7,7 +7,7 @@ public class HashMapGenericsV2<K, V> implements Map<K, V> {
     private int size = 0;
     private float threshold;
 
-    public HashMapGenericsV2(){
+    public HashMapGenericsV2() {
         hashTable = new Node[16];
         threshold = hashTable.length * 0.75f;
     }
@@ -27,20 +27,20 @@ public class HashMapGenericsV2<K, V> implements Map<K, V> {
     @Override
     public V put(K key, V value) {
         if (key == null) throw new NullPointerException("Нельзя положить элемент по ключу null");
-        if ((size + 1) >= threshold){
+        if ((size + 1) >= threshold) {
             threshold *= 2;
             resize();
         }
 
         int index = hash(key);
         Node<K, V> newNode = new Node<K, V>(key, value);
-        if (hashTable[index] == null){
+        if (hashTable[index] == null) {
             hashTable[index] = newNode;
             size++;
             return newNode.getValue();
-        }else {
-            while (hashTable[index] != null){
-                if (hashTable[index].getKey().equals(newNode.getKey())){
+        } else {
+            while (hashTable[index] != null) {
+                if (hashTable[index].getKey().equals(newNode.getKey())) {
                     hashTable[index] = newNode;
                     return newNode.getValue();
                 }
@@ -60,7 +60,7 @@ public class HashMapGenericsV2<K, V> implements Map<K, V> {
     public V remove(Object key) {
         int index = hash((K) key);
         int counter = 0;
-        while(!hashTable[index].getKey().equals(key)) {
+        while (!hashTable[index].getKey().equals(key)) {
             ++index;
             index %= hashTable.length;
             if (counter++ == hashTable.length) throw new NullPointerException("Нет корзины по такому ключу");
@@ -77,7 +77,7 @@ public class HashMapGenericsV2<K, V> implements Map<K, V> {
     @Override
     public V get(Object key) {
         int index = hash((K) key);
-        while(hashTable[index] != null){ // Пока не будет найдена пустая ячейка
+        while (hashTable[index] != null) { // Пока не будет найдена пустая ячейка
             if (hashTable[index].getKey() == key) return hashTable[index].getValue();
             ++index;
             index %= hashTable.length; // При достижении конца таблицы происходит возврат к началу
@@ -105,7 +105,7 @@ public class HashMapGenericsV2<K, V> implements Map<K, V> {
         for (int i = 0; i < hashTable.length; i++) {
             hashTable[i] = null;
         }
-        size=0;
+        size = 0;
     }
 
     /**
@@ -141,7 +141,7 @@ public class HashMapGenericsV2<K, V> implements Map<K, V> {
         Set<Map.Entry<K, V>> set = new HashSet<>();
         for (int i = 0; i < hashTable.length; i++) {
             if (hashTable[i] == null) continue;
-            Map.Entry<K,V> entry = new Entry<>(hashTable[i].getKey(), hashTable[i].getValue());
+            Map.Entry<K, V> entry = new Entry<>(hashTable[i].getKey(), hashTable[i].getValue());
             set.add(entry);
         }
         return set;
@@ -182,17 +182,17 @@ public class HashMapGenericsV2<K, V> implements Map<K, V> {
      * Метод увеличения мапы при заполнении на 3/4
      */
     private void resize() {
-        Node<K,V>[] oldHashTable = hashTable;
+        Node<K, V>[] oldHashTable = hashTable;
         hashTable = new Node[oldHashTable.length * 2];
         size = 0;
-        for (Node<K,V> node: oldHashTable){
-            if (node != null){
+        for (Node<K, V> node : oldHashTable) {
+            if (node != null) {
                 put(node.getKey(), node.getValue());
             }
         }
     }
 
-    private class Entry<K,V> implements Map.Entry {
+    private class Entry<K, V> implements Map.Entry {
         private K key;
         private V value;
 
