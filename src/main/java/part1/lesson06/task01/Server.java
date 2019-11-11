@@ -3,12 +3,8 @@ package part1.lesson06.task01;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Server {
 
@@ -39,6 +35,13 @@ public class Server {
         }
     }
 
+    /**
+     * Метод, который формирует ответ и передает его клиенту
+     *
+     * @param os
+     * @param isGetRequest
+     * @throws IOException
+     */
     private static void writeResponse(OutputStream os, boolean isGetRequest) throws IOException {
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(os); //сюда запишем стрингу для рендеринга страницы
         String nameError = (isGetRequest) ? "200 OK" : "404 Not Found";
@@ -51,6 +54,13 @@ public class Server {
         outputStreamWriter.close();
     }
 
+    /**
+     * Метод получения названия файлов и папок,
+     * содержащихся в корневом каталоге
+     *
+     * @return
+     * @throws IOException
+     */
     private static String getFileNameFromRoot() throws IOException {
         String string = System.getProperty("user.dir");
         /*List<String> listFileNameFromDir = Files.list(Paths.get(string))
@@ -69,7 +79,13 @@ public class Server {
         return result;
     }
 
-    private static boolean isGetRequestFromInputHeaders() throws Throwable {
+    /**
+     * Метод, котрый проверяет является ли запрос типом GET
+     *
+     * @return
+     * @throws IOException
+     */
+    private static boolean isGetRequestFromInputHeaders() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         while (true) {
             String strHeader = bufferedReader.readLine();
