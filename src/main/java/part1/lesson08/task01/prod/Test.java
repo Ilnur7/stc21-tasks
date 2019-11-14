@@ -8,16 +8,16 @@ public class Test {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Введите название файла для чтения:");
-        //String nameFileForRead = scanner.nextLine().trim() + ".txt";
-        String nameFileForRead = "data.txt";
+        String nameFileForRead = scanner.nextLine().trim() + ".txt";
+        //String nameFileForRead = "data.txt";
 
         System.out.println("Введите название файла для записи:");
-        //String nameFileForWrite = scanner.nextLine().trim() + ".txt";
-        String nameFileForWrite = "write.txt";
+        String nameFileForWrite = scanner.nextLine().trim() + ".txt";
+        //String nameFileForWrite = "write.txt";
 
         System.out.println("Введите количество итераций:");
-        //int countIteration = Integer.parseInt(scanner.nextLine().trim());
-        int countIteration = 100;
+        int countIteration = Integer.parseInt(scanner.nextLine().trim());
+        //int countIteration = 100;
         scanner.close();
 
         Life life = new Life();
