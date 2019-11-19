@@ -1,23 +1,35 @@
 package part1.lesson08.task01.prod;
 
 import java.io.*;
-import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Игра - жизнь
+ */
 public class LifeThreads {
+
     private static int[][] field = new int[40][40];
 
-
+    /**
+     * Метод запуска игры жизнь
+     * @param nameFileForRead
+     * @param nameFileForWrite
+     * @param countIteration
+     * @throws InterruptedException
+     */
     public void start(String nameFileForRead, String nameFileForWrite, int countIteration) throws InterruptedException {
-
         readFile(nameFileForRead);
         updateField(countIteration);
         writeInFile(nameFileForWrite);
     }
 
+    /**
+     * Метод обновления поля при каждой итерации
+     * @param countIteration
+     * @throws InterruptedException
+     */
     private void updateField(int countIteration) throws InterruptedException {
         int[][] newField;
         for (int i = 0; i < countIteration; i++) {
@@ -29,6 +41,10 @@ public class LifeThreads {
         }
     }
 
+    /**
+     * Метод записи полученного поля в файл
+     * @param nameFileForWrite
+     */
     private void writeInFile(String nameFileForWrite) {
         try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(nameFileForWrite)))) {
             String result = copyArrayToString();
@@ -39,6 +55,10 @@ public class LifeThreads {
         }
     }
 
+    /**
+     * Метод чтения данных из файла
+     * @param nameFileForRead
+     */
     private void readFile(String nameFileForRead) {
         File file = new File(nameFileForRead);
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));) {
@@ -54,6 +74,10 @@ public class LifeThreads {
         }
     }
 
+    /**
+     * Метод записи массива в переменную типа String
+     * @return
+     */
     private String copyArrayToString() {
         StringBuffer stringBuffer = new StringBuffer();
         for (int i = 0; i < field.length; i++) {
@@ -65,12 +89,22 @@ public class LifeThreads {
         return String.valueOf(stringBuffer);
     }
 
+    /**
+     * Метод добавления строки после чтения из файла в массив field
+     * @param cells
+     * @param count
+     */
     private void addRowCell(String[] cells, int count) {
         for (int i = 0; i < field.length; i++) {
             field[count][i] = Integer.parseInt(cells[i]);
         }
     }
 
+    /**
+     * Метод создания обновленного поля на каждой итерации
+     * @return
+     * @throws InterruptedException
+     */
     private int[][] createNewField() throws InterruptedException {
         int[][] arrayTemp = new int[field.length][field.length];
         int mid = arrayTemp.length/2;
@@ -94,6 +128,12 @@ public class LifeThreads {
         return arrayTemp;
     }
 
+    /**
+     * Метод расчета количества соседей у каждой ячейки
+     * @param rowY
+     * @param colX
+     * @return
+     */
     private int countNeighbours(int rowY, int colX) {
         int countNeighbours = 0;
         int size = field.length;
@@ -123,6 +163,9 @@ public class LifeThreads {
 
     }
 
+    /**
+     * Класс Runnable, который выполняет в потоках алгоритм игры жизнь
+     */
     public class MyRunnable implements Runnable {
         int[][] arrayTemp;
         int begin;
@@ -133,6 +176,8 @@ public class LifeThreads {
             this.begin = begin;
             this.end = end;
         }
+
+        int i = Integer.valueOf(String.valueOf(true));
 
         @Override
         public void run() {

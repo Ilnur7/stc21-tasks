@@ -81,8 +81,6 @@ public class Life {
                 }
             }
         }
-        double sin;
-
         return arrayTemp;
     }
 
